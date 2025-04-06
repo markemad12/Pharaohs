@@ -1,0 +1,141 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$pharaohs-primary: mat.define-palette(mat.$indigo-palette);
+$pharaohs-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$pharaohs-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$pharaohs-theme: mat.define-light-theme((
+  color: (
+    primary: $pharaohs-primary,
+    accent: $pharaohs-accent,
+    warn: $pharaohs-warn,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($pharaohs-theme);
+
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+// Primary colors
+$primary: #4361ee;
+$primary-light: lighten($primary, 10%);
+$primary-dark: darken($primary, 10%);
+
+// Text colors
+$text-primary: #1a1a1a;
+$text-secondary: #4a5568;
+$text-tertiary: #718096;
+
+// Background colors
+$background-light: #f8fafc;
+$background-gradient: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+
+// Status colors
+$success: #10b981;
+$error: #ef4444;
+$warning: #f59e0b;
+$info: #3b82f6;
+
+// Neutral colors
+$white: #ffffff;
+$border-color: #e2e8f0;
+$disabled: #cbd5e0;
+
+// Social colors
+$google: #db4437;
+$microsoft: #0078d4;
+
+// Shadows
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+// الألوان
+$primary-color: #2c3e50;
+$secondary-color: #3498db;
+$error-color: #e74c3c;
+$success-color: #2ecc71;
+
+// التنسيقات العامة
+body {
+  font-family: 'Cairo', sans-serif;
+  line-height: 1.6;
+  padding: 20px;
+  background-color: #f5f6fa;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+
+  input, textarea, select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+
+    &:focus {
+      border-color: $secondary-color;
+      outline: none;
+    }
+  }
+}
+
+.error {
+  color: $error-color;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+button {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &[type="submit"] {
+    background: $secondary-color;
+    color: white;
+
+    &:hover {
+      background: darken($secondary-color, 10%);
+    }
+  }
+}
+
+.note-card {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}

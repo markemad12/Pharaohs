@@ -1,0 +1,33 @@
+<div class="container">
+  <h1>Angular 16 CRUD Example - ItSolutionStuff.com</h1>
+  <a href="#" routerLink="/post/create" class="btn btn-success">Create New Post</a>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Content</th> <!-- تم تغيير من Body إلى Content لتتناسب مع البيانات -->
+        <th>Category</th> <!-- أضيف -->
+        <th>Priority</th> <!-- أضيف -->
+        <th>Tags</th>    <!-- أضيف -->
+        <th width="250px">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let post of posts">
+        <td>{{ post.id }}</td>
+        <td>{{ post.title }}</td>
+        <td>{{ post.content }}</td> <!-- كان مكتوب Body في الهيدر بينما البيانات تسمى content -->
+        <td>{{ post.category }}</td> <!-- لم يكن موجود في الهيدر -->
+        <td>{{ post.priority }}</td> <!-- لم يكن موجود في الهيدر -->
+        <td>{{ post.tags }}</td>    <!-- لم يكن موجود في الهيدر -->
+        <td>
+          <a href="#" [routerLink]="['/post/', post.id, 'view']" class="btn btn-info">View</a>
+          <a href="#" [routerLink]="['/post/', post.id, 'edit']" class="btn btn-primary" (click)="updateTask(post)">Edit</a>
+          <button type="button" (click)="deletePost(post.id)" class="btn btn-danger">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

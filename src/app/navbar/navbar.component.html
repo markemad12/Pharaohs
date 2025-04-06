@@ -1,0 +1,13 @@
+<nav>
+    <a routerLink="/" class="brand">
+      <i class="fas fa-crown"></i>
+      Kings of ancient Egypt The Pharaohs
+    </a>
+    
+    <div class="nav-items">
+      <button *ngIf="authService.isLoggedIn()" (click)="authService.logout()">
+        <i class="fas fa-sign-out-alt"></i>
+        Logout
+      </button>
+    </div>
+  </nav>

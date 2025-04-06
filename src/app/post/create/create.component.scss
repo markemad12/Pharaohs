@@ -1,0 +1,131 @@
+.container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+    h1 {
+      color: #2c3e50;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      font-weight: 600;
+    }
+  
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+  
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+  
+      label {
+        font-weight: 500;
+        color: #4a5568;
+        font-size: 0.9rem;
+      }
+  
+      .form-control {
+        padding: 0.75rem 1rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 6px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+  
+        &:focus {
+          outline: none;
+          border-color: #4299e1;
+          box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+        }
+  
+        &.ng-invalid.ng-touched {
+          border-color: #fc8181;
+        }
+      }
+  
+      textarea.form-control {
+        min-height: 100px;
+        resize: vertical;
+      }
+  
+      .alert-danger {
+        padding: 0.5rem;
+        background-color: #fff5f5;
+        color: #c53030;
+        border: 1px solid #fed7d7;
+        border-radius: 4px;
+        font-size: 0.85rem;
+        margin-top: 0.25rem;
+      }
+    }
+  
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+  
+      &-primary {
+        background-color: #4299e1;
+        border: 2px solid #4299e1;
+        color: white;
+  
+        &:hover {
+          background-color: #3182ce;
+          border-color: #3182ce;
+        }
+  
+        &:disabled {
+          background-color: #cbd5e0;
+          border-color: #cbd5e0;
+          cursor: not-allowed;
+        }
+      }
+  
+      &-primary[routerLink] {
+        background-color: transparent;
+        border-color: #4299e1;
+        color: #4299e1;
+  
+        &:hover {
+          background-color: #4299e1;
+          color: white;
+        }
+      }
+    }
+  
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .container {
+      margin: 1rem;
+      padding: 1.5rem;
+  
+      h1 {
+        font-size: 1.5rem;
+      }
+  
+      .form-control {
+        font-size: 0.9rem;
+      }
+  
+      .btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+      }
+    }
+  }

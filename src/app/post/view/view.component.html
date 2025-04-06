@@ -1,0 +1,30 @@
+<div class="container">
+<h1>View post</h1>
+<div>
+    <strong>ID:</strong>
+    <p>{{post?.id}}</p>
+</div>
+<div>
+    <strong>Title:</strong>
+    <p>{{post?.title}}</p>
+</div>
+<div>
+    <strong>Content:</strong>
+    <p>{{post?.content}}</p>
+</div>
+<div>
+    <strong>Category:</strong>
+    <p>{{post?.category}}</p>
+</div>
+<div>
+    <strong>Priority:</strong>
+    <p>{{post?.priority}}</p>
+</div>
+<div>
+    <strong>tags:</strong>
+    <p>{{post?.tags}}</p>
+</div>
+<a href="#" routerLink="['/post/', post.id, 'edit']" class="btn btn-primary">Edit</a>
+<button class="btn btn-danger" (click)="deletePost(post.id)">Delete</button>
+<a href="#" routerLink="/post/notes" class="btn btn-primary">Back</a>
+</div>

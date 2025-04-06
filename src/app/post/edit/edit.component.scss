@@ -1,0 +1,230 @@
+$primary: #4f46e5;
+$glass-bg: rgba(255, 255, 255, 0.96);
+$dark-bg: #1a1a1a;
+$neon-accent: #8b5cf6;
+
+@mixin glass-effect {
+  background: $glass-bg;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+}
+
+.container {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 2.5rem;
+  border-radius: 24px;
+  @include glass-effect;
+  position: relative;
+  overflow: hidden;
+
+  h1 {
+    font-size: 2.75rem;
+    color: darken($primary, 15%);
+    text-align: center;
+    margin-bottom: 2.5rem;
+    position: relative;
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 4px;
+      background: linear-gradient(90deg, $primary, $neon-accent);
+      border-radius: 2px;
+    }
+  }
+
+  form {
+    display: grid;
+    gap: 1.75rem;
+  }
+
+  .form-group {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 1.5rem;
+    align-items: center;
+    position: relative;
+
+    label {
+      font-weight: 600;
+      color: darken($primary, 10%);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      position: relative;
+      padding-left: 1.5rem;
+
+      &::before {
+        content: '✎';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        color: $neon-accent;
+        font-size: 1.1em;
+      }
+    }
+
+    .form-control {
+      padding: 0.85rem 1.5rem;
+      border: 2px solid rgba($primary, 0.15);
+      border-radius: 12px;
+      font-size: 1.05rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      background: rgba(255, 255, 255, 0.9);
+
+      &:focus {
+        outline: none;
+        border-color: $primary;
+        box-shadow: 0 0 0 3px rgba($primary, 0.2);
+        background: white;
+      }
+
+      &[type="textarea"] {
+        min-height: 120px;
+        resize: vertical;
+      }
+    }
+
+    &:hover .form-control {
+      transform: translateY(-2px);
+    }
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem 2.5rem;
+    border-radius: 12px;
+    background: linear-gradient(135deg, $primary, $neon-accent);
+    color: white;
+    font-weight: 600;
+    border: none;
+    transition: all 0.3s;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    position: relative;
+    overflow: hidden;
+    margin-top: 1.5rem;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba($primary, 0.3);
+
+      &::before {
+        opacity: 1;
+      }
+    }
+
+    &[type="submit"] {
+      margin-right: 1rem;
+    }
+  }
+
+}
+
+@mixin dark-theme-form {
+  background: rgba($dark-bg, 0.95);
+  border-color: rgba(255,255,255,0.1);
+
+  h1 {
+    color: lighten($primary, 15%);
+    
+    &::after {
+      background: linear-gradient(90deg, $neon-accent, $primary);
+    }
+  }
+
+  .form-group {
+    label {
+      color: lighten($primary, 10%);
+      
+      &::before {
+        color: $neon-accent;
+      }
+    }
+
+    .form-control {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255,255,255,0.15);
+      color: white;
+
+      &:focus {
+        background: rgba(255,255,255,0.1);
+        border-color: $primary;
+      }
+    }
+  }
+
+  .btn-primary {
+    box-shadow: 0 4px 16px rgba($neon-accent, 0.2);
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    margin: 1.5rem;
+    padding: 1.5rem;
+
+    h1 {
+      font-size: 2.25rem;
+    }
+
+    .form-group {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+
+      label {
+        padding-left: 0;
+        
+        &::before {
+          display: none;
+        }
+      }
+    }
+
+    .btn-primary {
+      width: 100%;
+      margin-top: 1rem;
+    }
+  }
+}
+
+// Validation Styles
+.ng-invalid.ng-touched {
+  .form-control {
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2) !important;
+    
+    + .validation-error {
+      display: block;
+      color: #ef4444;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      padding-left: 1.5rem;
+      position: absolute;
+      bottom: -1.5rem;
+      left: 120px;
+    }
+  }
+}
