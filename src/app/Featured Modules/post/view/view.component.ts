@@ -1,7 +1,7 @@
 // view.component.ts
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Post } from '../post';
-import { NotesService } from 'src/app/post/notes.service';
+import { NotesService } from 'src/app/Featured Modules/post/services/notes.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../auth/auth.service';
+import { AuthService } from '../../Featured Modules/auth/services/auth.service';
 import { CommonModule } from '@angular/common';
 
 @Component({

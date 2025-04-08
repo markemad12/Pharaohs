@@ -11,7 +11,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
-import { PostModule } from './post/post.module';
+import { PostModule } from './Featured Modules/post/post.module';
 import { NotFoundComponent } from './notfound/notfound.component';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 @NgModule({
