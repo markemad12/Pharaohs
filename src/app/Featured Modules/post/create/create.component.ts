@@ -3,7 +3,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { FormGroup, FormControl, Validators} from '@angular/forms';
-import { NotesService } from 'src/app/Featured Modules/post/services/notes.service';
+import { NotesService } from 'src/app/Featured Modules/post/notes/notes.service';
 
      
 

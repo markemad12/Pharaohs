@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Post } from '../post';
-import { NotesService } from 'src/app/Featured Modules/post/services/notes.service';
+import { NotesService } from 'src/app/Featured Modules/post/notes/notes.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Post } from '../post';
-import { NotesService } from 'src/app/Featured Modules/post/services/notes.service';
+import { NotesService } from 'src/app/Featured Modules/post/notes/notes.service';
 import { CreateComponent } from '../create/create.component';
 
 @Component({

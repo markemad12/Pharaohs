@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/Featured Modules/auth/services/auth.service';
+import { AuthService } from 'src/app/Featured Modules/auth/auth.service';
 
 @Component({
   selector: 'app-register',
