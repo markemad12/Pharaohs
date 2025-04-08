@@ -12,8 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { PostModule } from './post/post.module';
-import { AuthInterceptor } from './auth.interceptor';
 import { NotFoundComponent } from './notfound/notfound.component';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,9 +33,6 @@ import { NotFoundComponent } from './notfound/notfound.component';
     PostModule,
     NavbarComponent
   ],
-  providers: [{provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptor,
-    multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

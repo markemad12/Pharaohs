@@ -4,8 +4,8 @@ import { CreateComponent } from './post/create/create.component';
 import { ViewComponent } from './post/view/view.component';
 import { EditComponent } from './post/edit/edit.component';
 import { NotesComponent } from './post/notes/notes.component';
-import { AuthGuard } from './auth.guard';
-import { LoginGuard } from './login.guard';
+import { AuthGuard } from './core/guards/auth.guard';
+import { LoginGuard } from './core/guards/login.guard';
 
 
 const routes: Routes = [
