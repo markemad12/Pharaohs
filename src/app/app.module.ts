@@ -3,9 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { NavbarComponent } from './navbar/navbar.component';
+import { NavbarComponent } from './shared/navbar/navbar.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -19,10 +17,7 @@ import { NotFoundComponent } from './notfound/notfound.component';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    RegisterComponent,
-    NavbarComponent,
-    NotFoundComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +30,8 @@ import { NotFoundComponent } from './notfound/notfound.component';
     MatIconModule,
     MatCardModule,
     MatChipsModule,
-    PostModule
+    PostModule,
+    NavbarComponent
   ],
   providers: [{provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,

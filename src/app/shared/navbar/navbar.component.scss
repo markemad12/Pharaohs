@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap');
+
+// متغيرات الألوان والخطوط لتسهيل التعديل
+$primary-color: #333; // اللون الأساسي
+$accent-color: #f39c12; // لون اللمسات والإبراز
+$text-color: #fff; // لون النصوص
+$hover-bg: rgba(255, 255, 255, 0.15); // خلفية عند التمرير
+
+nav {
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(135deg, $primary-color, darken($primary-color, 10%));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  position: relative;
+  z-index: 10;
+
+  // عنصر العلامة (الشعار والنص)
+  .brand {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: $text-color;
+    transition: color 0.3s ease;
+
+    // تنسيق الأيقونة داخل العلامة
+    i {
+      margin-right: 0.5rem;
+      color: $accent-color;
+      transition: transform 0.3s ease;
+    }
+
+    &:hover {
+      color: $accent-color;
+      
+      i {
+        transform: rotate(20deg);
+      }
+    }
+  }
+
+  // عناصر التنقل مثل زر تسجيل الخروج
+  .nav-items {
+    display: flex;
+    align-items: center;
+
+    button {
+      background: transparent;
+      border: 2px solid $accent-color;
+      border-radius: 5px;
+      color: $accent-color;
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      margin-left: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      
+      // أيقونة الزر
+      i {
+        margin-right: 0.5rem;
+        font-size: 1.2rem;
+      }
+      
+      &:hover {
+        background: $accent-color;
+        color: $primary-color;
+      }
+      
+      &:active {
+        transform: scale(0.98);
+      }
+    }
+  }
+  
+  // تحسين استجابة التصميم لشاشات الجوال (يمكنك التعديل حسب الحاجة)
+  @media (max-width: 768px) {
+    flex-direction: column;
+    padding: 1rem;
+    
+    .nav-items {
+      margin-top: 0.5rem;
+
+      button {
+        margin-left: 0;
+        width: 100%;
+        text-align: center;
+      }
+    }
+  }
+}

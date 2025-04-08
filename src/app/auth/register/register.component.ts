@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -61,7 +61,7 @@ export class RegisterComponent implements OnDestroy {
   
     this.subscription = this.authService.register(formData).subscribe({
       next: () => {
-        this.router.navigate(['/login'], {
+        this.router.navigate(['login'], {
           queryParams: { registered: 'true' }
         });
       },

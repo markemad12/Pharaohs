@@ -58,7 +58,7 @@ export class CreateComponent implements OnInit {
       this.postService.create(this.form.value).subscribe({
         next: (res) => {
           console.log('Post created!');
-          this.router.navigateByUrl('post/notes');
+          this.router.navigateByUrl('post');
         },
         error: (err) => {
           console.error('Error creating post:', err);

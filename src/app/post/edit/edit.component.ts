@@ -59,7 +59,7 @@ export class EditComponent {
 
     this.postService.update(this.id, this.form.value).subscribe({
       next: (res) => {
-        this.router.navigate(['/post/notes']); // Use navigate() instead of navigateByUrl for better routing
+        this.router.navigate(['post']); // Use navigate() instead of navigateByUrl for better routing
       },
       error: (err) => {
         console.error('Update Error:', err);

@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap');
+
+// تعريف المتغيرات للألوان والخطوط لتسهيل التعديل
+$card-bg: #ffffff;
+$accent-color: #27ae60;
+$accent-hover: #2ecc71;
+$text-color: #333;
+$input-bg: #f4f6f8;
+$border-color: #e1e1e1;
+$box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+
+// تأثير دخول عناصر الحاوية بظهور تدريجي مع حركة لأعلى
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-container {
+  font-family: 'Roboto', sans-serif;
+  max-width: 420px;
+  margin: 5rem auto;
+  padding: 2.5rem;
+  background: $card-bg;
+  border-radius: 12px;
+  box-shadow: $box-shadow;
+  animation: fadeInUp 0.7s ease forwards;
+  position: relative;
+  overflow: hidden;
+  
+  // تأثير خلفية متدرجة يضفي لمسة عصرية حول الحاوية
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200%;
+    height: 100px;
+    background: linear-gradient(135deg, transparent, $accent-color 50%);
+    opacity: 0.15;
+    z-index: -1;
+  }
+  
+  // تنسيق العنوان الرئيسي
+  h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: $accent-color;
+    font-weight: 500;
+    font-size: 1.8rem;
+    text-shadow: 1px 1px 3px rgba($accent-color, 0.3);
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    
+    .input-group {
+      position: relative;
+      
+      input {
+        width: 100%;
+        padding: 0.85rem 1rem;
+        padding-right: 3rem;
+        background: $input-bg;
+        border: 1px solid $border-color;
+        border-radius: 8px;
+        font-size: 1rem;
+        color: $text-color;
+        transition: all 0.3s ease;
+        
+        &:focus {
+          outline: none;
+          border-color: $accent-color;
+          box-shadow: 0 0 0 4px rgba($accent-color, 0.1);
+        }
+      }
+      
+      // تنسيق الأيقونة الظاهرة داخل حقل الإدخال
+      .icon {
+        position: absolute;
+        top: 50%;
+        right: 1rem;
+        transform: translateY(-50%);
+        color: $border-color;
+        font-size: 1.1rem;
+        transition: color 0.3s ease;
+      }
+      
+      // عند تركيز المستخدم على حقل الإدخال، تتغير أيقونة الحقل
+      input:focus + .icon {
+        color: $accent-color;
+      }
+    }
+    
+    // تنسيق زر "Sign In" مع تأثيرات انتقالية وحركة عند الضغط
+    button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.85rem;
+      background: $accent-color;
+      border: none;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 500;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+      
+      &:hover {
+        background: $accent-hover;
+      }
+      
+      &:active {
+        transform: scale(0.97);
+      }
+      
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+  }
+  
+  // تنسيق نص الرابط أسفل الفورم
+  .link-text {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+    color: $text-color;
+    
+    a {
+      color: $accent-color;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.3s ease;
+      
+      &:hover {
+        color: $accent-hover;
+      }
+    }
+  }
+}
