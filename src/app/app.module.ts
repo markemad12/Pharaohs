@@ -13,7 +13,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { PostModule } from './Featured Modules/post/post.module';
 import { NotFoundComponent } from './notfound/notfound.component';
-import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { ToastrModule } from 'ngx-toastr';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +31,12 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
     MatCardModule,
     MatChipsModule,
     PostModule,
-    NavbarComponent
+    NavbarComponent,
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+    })
   ],
   bootstrap: [AppComponent]
 })

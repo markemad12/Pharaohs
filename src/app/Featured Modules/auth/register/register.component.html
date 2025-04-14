@@ -27,14 +27,7 @@
         </div>
       </div>
     </div>
-
-    <div class="form-group">
-      <input type="password" formControlName="confirmPassword" placeholder="Confirm Password">
-      <div *ngIf="registerForm.errors?.['mismatch']" class="error">
-        Passwords do not match
-      </div>
-    </div>
-  
+    
       <div class="form-group">
         <input type="tel" formControlName="phone" placeholder="Phone">
         <div *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched" class="error">

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/Featured Modules/auth/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +18,8 @@ export class RegisterComponent implements OnDestroy {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {
     this.registerForm = this.fb.group({
       name: ['', [Validators.required]],
@@ -25,7 +27,6 @@ export class RegisterComponent implements OnDestroy {
       password: ['', [
         Validators.required
       ]],
-      confirmPassword: ['', Validators.required],
       phone: ['', [
         Validators.required,
       ]],
@@ -35,13 +36,6 @@ export class RegisterComponent implements OnDestroy {
       address: ['', [Validators.required, Validators.minLength(5)]]
   });
   }
-
-  // Custom validator for password matching
-  passwordMatchValidator(form: FormGroup) {
-    return form.get('password')?.value === form.get('confirmPassword')?.value 
-      ? null : { mismatch: true };
-  }
-
   get f() {
     return this.registerForm.controls;
   }
@@ -61,13 +55,14 @@ export class RegisterComponent implements OnDestroy {
   
     this.subscription = this.authService.register(formData).subscribe({
       next: () => {
-        this.router.navigate(['login'], {
+        this.toastr.success('Registration successful!', 'Success');
+        this.router.navigate(['post'], {
           queryParams: { registered: 'true' }
         });
       },
       error: (error) => {
         this.isSubmitting = false;
-        alert(error.message || 'Registration failed. Please try again.');
+        this.toastr.error(error.message || 'Registration failed', 'Error');
       },
       complete: () => this.isSubmitting = false
     });

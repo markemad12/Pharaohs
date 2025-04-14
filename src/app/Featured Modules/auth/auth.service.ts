@@ -12,7 +12,13 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) { }
 
   register(userData: any) {
-    return this.http.post(`${this.apiUrl}/register`, userData);
+    return this.http.post<{ token: string }>(`${this.apiUrl}/register`, userData).pipe(
+      tap(res => {
+        if (res.token) {
+          localStorage.setItem('token', res.token);
+        }
+      })
+    );
   }
 
   login(credentials: { email: string; password: string }) {
