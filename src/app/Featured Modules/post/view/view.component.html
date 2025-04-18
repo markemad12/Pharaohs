@@ -25,6 +25,6 @@
     <p>{{post?.tags}}</p>
 </div>
 <a href="#" [routerLink]="['/post/', post.id, 'edit']" class="btn btn-primary">Edit</a>
-<button class="btn btn-danger" (click)="deletePost(post.id)">Delete</button>
+<button class="btn btn-primary" (click)="deletePost(post.id)">Delete</button>
 <a routerLink="/post" class="btn btn-primary">Back</a>
 </div>

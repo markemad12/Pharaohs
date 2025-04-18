@@ -1,41 +1,25 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-
-export interface Note {
-  id: number;
-  title: string;
-  content: string;
-  category: string;
-  priority: string;
-  tags: string[];
-  email?: string;
-}
+import { environment } from 'src/environments/environment.development';
+import { Post } from '../post';
 
 @Injectable({ providedIn: 'root' })
 export class NotesService {
-  private apiUrl = 'http://localhost:8000/notes';
+  private apiUrl = `${environment.apiUrl}/notes`; // Use environment-based URL
 
   constructor(private http: HttpClient) { }
 
-  private getHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token');
-    return new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-  }
-
-  getAll(): Observable<Note[]> {
-    return this.http.get<Note[]>(this.apiUrl, { headers: this.getHeaders() }).pipe(
+  getAll(): Observable<Post[]> {
+    return this.http.get<Post[]>(this.apiUrl).pipe(
       tap(() => this.log('Fetched all notes')),
       catchError(this.handleError)
     );
   }
 
-  find(id: number): Observable<Note> {
-    return this.http.get<Note>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() }).pipe(
+  find(id: number): Observable<Post> {
+    return this.http.get<Post>(`${this.apiUrl}/${id}`).pipe(
       tap(() => this.log(`Fetched note ${id}`)),
       catchError((error: HttpErrorResponse) => 
         error.status === 404 
@@ -45,34 +29,62 @@ export class NotesService {
     );
   }
 
-  create(noteData: Omit<Note, 'id'>): Observable<Note> {
-    return this.http.post<Note>(this.apiUrl, noteData, { headers: this.getHeaders() }).pipe(
+  create(noteData: Omit<Post, 'id'>): Observable<Post> {
+    return this.http.post<Post>(this.apiUrl, noteData).pipe(
       tap((newNote) => this.log(`Created note ${newNote.id}`)),
       catchError(this.handleError)
     );
   }
 
-  update(id: number, data: Partial<Note>): Observable<Note> {
-    return this.http.put<Note>(`${this.apiUrl}/${id}`, data, { headers: this.getHeaders() }).pipe(
+  update(id: number, data: Partial<Post>): Observable<Post> {
+    return this.http.patch<Post>(`${this.apiUrl}/${id}`, data).pipe(
       tap(() => this.log(`Updated note ${id}`)),
       catchError(this.handleError)
     );
   }
 
   delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() }).pipe(
+    return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(
       tap(() => this.log(`Deleted note ${id}`)),
       catchError(this.handleError)
     );
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {
-    const errorMessage = error.error?.message || error.message || 'Unknown error occurred';
+    let errorMessage = 'An unknown error occurred!';
+    
+    if (error.error instanceof ErrorEvent) {
+      // Client-side error
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // Server-side error
+      errorMessage = this.getServerErrorMessage(error);
+    }
+    
     this.log(`Error: ${errorMessage}`);
     return throwError(() => new Error(errorMessage));
   }
 
+  private getServerErrorMessage(error: HttpErrorResponse): string {
+    switch (error.status) {
+      case 400:
+        return 'Bad request: Please check your input data';
+      case 401:
+        return 'Unauthorized: Please login again';
+      case 403:
+        return 'Forbidden: You do not have permission';
+      case 404:
+        return `Resource not found: ${error.error?.message || ''}`;
+      case 500:
+        return 'Server error: Please try again later';
+      default:
+        return error.error?.message || error.message || 'Unknown server error';
+    }
+  }
+
   private log(message: string): void {
-    console.log(`NotesService: ${message}`);
+    if (!environment.prodution) {
+      console.log(`[${new Date().toISOString()}] NotesService: ${message}`);
+    }
   }
 }

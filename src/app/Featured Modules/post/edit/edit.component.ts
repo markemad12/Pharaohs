@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Post } from '../post';
 import { NotesService } from 'src/app/Featured Modules/post/notes/notes.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit',
@@ -17,7 +18,8 @@ export class EditComponent {
   constructor(
     public postService: NotesService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -59,6 +61,7 @@ export class EditComponent {
 
     this.postService.update(this.id, this.form.value).subscribe({
       next: (res) => {
+        this.toastr.success('Registration successful!', 'Success');
         this.router.navigate(['post']); // Use navigate() instead of navigateByUrl for better routing
       },
       error: (err) => {

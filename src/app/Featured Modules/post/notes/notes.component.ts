@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Post } from '../post';
 import { NotesService } from 'src/app/Featured Modules/post/notes/notes.service';
-import { CreateComponent } from '../create/create.component';
+import { ToastrService } from 'ngx-toastr';
+import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirmation-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-notes',
@@ -11,7 +13,7 @@ import { CreateComponent } from '../create/create.component';
 export class NotesComponent implements OnInit {
   posts: Post[] = [];
 
-  constructor(public postService: NotesService ) { }
+  constructor(public postService: NotesService , private toastr: ToastrService,  private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.postService.getAll().subscribe({
@@ -38,15 +40,24 @@ export class NotesComponent implements OnInit {
       }
     });
   }
-  deletePost(id:number){
+  deletePost(id: number) {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '400px'
+    });
 
-    this.postService.delete(id).subscribe(res => {
-
-         this.posts = this.posts.filter(item => item.id !== id);
-
-         console.log('Post deleted successfully!');
-
-    })
-
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.postService.delete(id).subscribe({
+          next: () => {
+            this.toastr.success('Post deleted successfully!', 'Success');
+            this.posts = this.posts.filter(item => item.id !== id);
+          },
+          error: (err) => {
+            this.toastr.error('Failed to delete post', 'Error');
+            console.error('Delete error:', err);
+          }
+        });
+      }
+    });
   }
 }

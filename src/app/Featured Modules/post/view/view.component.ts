@@ -66,7 +66,7 @@ export class ViewComponent implements OnInit, OnDestroy {
       // Call your delete service here
       this.notesService.delete(postId).subscribe(() => {
         // Redirect or show success message
-        this.router.navigate(['/post/notes']);
+        this.router.navigate(['/post']);
       });
     }
   }

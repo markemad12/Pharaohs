@@ -18,14 +18,16 @@
       <tr *ngFor="let post of posts">
         <td>{{ post.id }}</td>
         <td>{{ post.title }}</td>
-        <td>{{ post.content }}</td> <!-- كان مكتوب Body في الهيدر بينما البيانات تسمى content -->
-        <td>{{ post.category }}</td> <!-- لم يكن موجود في الهيدر -->
-        <td>{{ post.priority }}</td> <!-- لم يكن موجود في الهيدر -->
-        <td>{{ post.tags }}</td>    <!-- لم يكن موجود في الهيدر -->
+        <td>{{ post.content }}</td> 
+        <td>{{ post.category }}</td> 
+        <td>{{ post.priority }}</td> 
+        <td>{{ post.tags }}</td>    
         <td>
           <a href="#" [routerLink]="['/post/', post.id, 'view']" class="btn btn-info">View</a>
           <a href="#" [routerLink]="['/post/', post.id, 'edit']" class="btn btn-primary" (click)="updateTask(post)">Edit</a>
-          <button type="button" (click)="deletePost(post.id)" class="btn btn-danger">Delete</button>
+          <button mat-icon-button color="warn" (click)="deletePost(post.id)"  class="btn btn-danger">
+            delete
+          </button>
         </td>
       </tr>
     </tbody>

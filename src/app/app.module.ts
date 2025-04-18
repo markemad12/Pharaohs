@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -14,10 +14,16 @@ import { MatChipsModule } from '@angular/material/chips';
 import { PostModule } from './Featured Modules/post/post.module';
 import { NotFoundComponent } from './notfound/notfound.component';
 import { ToastrModule } from 'ngx-toastr';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { httpInterceptorProviders } from './core/interceptors';
 @NgModule({
   declarations: [
     AppComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +33,6 @@ import { ToastrModule } from 'ngx-toastr';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
-    MatIconModule,
     MatCardModule,
     MatChipsModule,
     PostModule,
@@ -36,8 +41,12 @@ import { ToastrModule } from 'ngx-toastr';
       timeOut: 3000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
-    })
+    }),
+    MatDialogModule,
+    MatButtonModule,
+    MatIconModule
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  providers: [httpInterceptorProviders]
 })
 export class AppModule { }

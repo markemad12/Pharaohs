@@ -1,44 +1,111 @@
+// auth.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { catchError, tap } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
+
+export interface User {
+  email: string;
+  password: string;
+  name?: string;
+}
+
+export interface LoginCredentials {
+  email: string;
+  password: string;
+}
+
+export interface AuthResponse {
+  token: string;
+  expiresIn?: number;
+  user?: any;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8000';
+  private apiUrl = environment.apiUrl;
+  private tokenExpirationTimer: any;
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) { }
 
-  register(userData: any) {
-    return this.http.post<{ token: string }>(`${this.apiUrl}/register`, userData).pipe(
-      tap(res => {
-        if (res.token) {
-          localStorage.setItem('token', res.token);
-        }
-      })
+
+  register(userData: User): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/register`, userData).pipe(
+      tap(res => this.handleAuthentication(res)),
+      catchError(this.handleError)
     );
   }
 
-  login(credentials: { email: string; password: string }) {
-    return this.http.post<{ token: string }>(`${this.apiUrl}/login`, credentials).pipe(
-      tap(res => {
-        localStorage.setItem('token', res.token);
-      })
+  login(credentials: LoginCredentials): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, credentials).pipe(
+      tap(res => this.handleAuthentication(res)),
+      catchError(this.handleError)
     );
   }
 
-  logout() {
+
+  private handleAuthentication(authResponse: AuthResponse): void {
+    const token = authResponse.token;
+    const expiresIn = authResponse.expiresIn || 3600; // Default to 1 hour
+    
+    if (token) {
+      const expirationDate = new Date().getTime() + expiresIn * 1000;
+      localStorage.setItem('token', token);
+      localStorage.setItem('tokenExpiration', expirationDate.toString());
+      
+      // Set auto-logout timer
+      this.setAutoLogout(expiresIn * 1000);
+    }
+  }
+
+  logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('tokenExpiration');
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+    }
+    this.tokenExpirationTimer = null;
     this.router.navigate(['/login']);
   }
 
-  getToken() {
+  getToken(): string | null {
     return localStorage.getItem('token');
   }
 
-  isLoggedIn() {
-    return !!this.getToken();
+  isLoggedIn(): boolean {
+    const token = this.getToken();
+    const expiration = localStorage.getItem('tokenExpiration');
+    if (!token || !expiration) return false;
+    
+    return Date.now() < parseInt(expiration);
+  }
+
+  private setAutoLogout(expirationDuration: number): void {
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.logout();
+    }, expirationDuration);
+  }
+
+ 
+  private handleError(error: any): Observable<never> {
+    console.error('An error occurred:', error);
+    let errorMessage = 'An unknown error occurred!';
+    
+    if (error.error instanceof ErrorEvent) {
+      // Client-side error
+      errorMessage = `Error: ${error.error.message}`;
+    } else if (error.status) {
+      // Server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    
+    return throwError(() => new Error(errorMessage));
   }
 }
