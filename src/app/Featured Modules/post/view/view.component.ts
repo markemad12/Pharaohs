@@ -4,6 +4,9 @@ import { Post } from '../post';
 import { NotesService } from 'src/app/Featured Modules/post/notes/notes.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-view',
@@ -17,11 +20,14 @@ export class ViewComponent implements OnInit, OnDestroy {
   isLoading = true;
   errorMessage = '';
   notFound = false;
+  posts: Post[] = [];
 
   constructor(
     private notesService: NotesService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService,  
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -61,14 +67,30 @@ export class ViewComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  deletePost(postId: number) {
-    if(confirm('Are you sure you want to delete this post?')) {
-      // Call your delete service here
-      this.notesService.delete(postId).subscribe(() => {
-        // Redirect or show success message
-        this.router.navigate(['/post']);
-      });
-    }
-  }
+  deletePost(id: number) {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '400px'
+    });
   
-}
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.notesService.delete(id).subscribe({
+          next: () => {
+            this.toastr.success('Post deleted successfully!', 'Success');
+            this.posts = this.posts.filter(item => item.id !== id);
+            this.router.navigate(['/post']);  // <-- Move navigation HERE
+          },
+          error: (err) => {
+            this.toastr.error('Failed to delete post', 'Error');
+            console.error('Delete error:', err);
+            // Optional: Add error-specific navigation if needed
+            // this.router.navigate(['/error']);
+          }
+        });
+      } else {
+        // Optional: Add canceled dialog feedback
+        this.toastr.info('Deletion canceled', 'Info');
+      }
+    });
+  }
+  }

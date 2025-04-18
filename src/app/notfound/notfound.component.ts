@@ -17,6 +17,6 @@ export class NotFoundComponent {
   constructor(private router: Router) {}
 
   returnHome(): void {
-    this.router.navigate(['/post/notes']);
+    this.router.navigate(['/post']);
   }
 }

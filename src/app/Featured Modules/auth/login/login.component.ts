@@ -32,7 +32,7 @@ export class LoginComponent {
           this.router.navigate(['post']
           );
         },
-        error: (err) => alert('Login failed: ' + err?.error?.message)
+        error: (err) =>  this.toastr.error('Login failed!', 'Error')
       });
     }
   }

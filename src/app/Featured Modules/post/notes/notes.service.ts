@@ -49,21 +49,19 @@ export class NotesService {
       catchError(this.handleError)
     );
   }
-
-  private handleError(error: HttpErrorResponse): Observable<never> {
+  private handleError = (error: HttpErrorResponse): Observable<never> => {
     let errorMessage = 'An unknown error occurred!';
     
     if (error.error instanceof ErrorEvent) {
-      // Client-side error
       errorMessage = `Error: ${error.error.message}`;
     } else {
-      // Server-side error
       errorMessage = this.getServerErrorMessage(error);
     }
     
     this.log(`Error: ${errorMessage}`);
     return throwError(() => new Error(errorMessage));
   }
+
 
   private getServerErrorMessage(error: HttpErrorResponse): string {
     switch (error.status) {

@@ -53,20 +53,18 @@ export class EditComponent {
   }
 
   submit() {
-    if (this.form.invalid) {
-      // Mark all fields as touched to show validation messages
-      this.form.markAllAsTouched();
-      return;
-    }
-
     this.postService.update(this.id, this.form.value).subscribe({
-      next: (res) => {
-        this.toastr.success('Note Upadate successfully!', 'Success');
-        this.router.navigate(['post']); // Use navigate() instead of navigateByUrl for better routing
+      next: () => {
+        this.toastr.success('Updated successfully');
+        this.router.navigate(['/post']);
       },
-      error: (err) => {
-        console.error('Update Error:', err);
-        // Show user-friendly error message
+      error: (error) => {
+        if (error.message.includes('not found')) {
+          this.toastr.error('This note has been deleted');
+          this.router.navigate(['/post']);
+        } else {
+          this.toastr.error(`Update failed: ${error.message}`);
+        }
       }
     });
   }
