@@ -1,0 +1,54 @@
+// styles.scss
+
+.confirm-delete-dialog {
+    // the container itself
+    .mat-dialog-container {
+      padding: 0;                // remove default padding if you want full control
+      border-radius: 8px;        // rounded corners
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      overflow: hidden;          // ensure children respect the radius
+    }
+  
+    // the header/title
+    h2[mat-dialog-title] {
+      margin: 0;
+      padding: 16px 24px;
+      font-size: 1.25rem;
+      font-weight: 600;
+      background-color: #fafafa;
+      border-bottom: 1px solid #e0e0e0;
+    }
+  
+    // the content/body
+    .mat-dialog-content {
+      padding: 24px;
+      font-size: 1rem;
+      color: #424242;
+      line-height: 1.5;
+    }
+  
+    // the action buttons row
+    .mat-dialog-actions {
+      display: flex;
+      justify-content: flex-end;
+      padding: 8px 24px 16px;
+      background-color: #fafafa;
+      border-top: 1px solid #e0e0e0;
+  
+      button {
+        min-width: 80px;
+        font-weight: 500;
+      }
+  
+      // space between buttons
+      button + button {
+        margin-left: 12px;
+      }
+    }
+  
+    // style individual buttons if you want even more control
+    button[mat-button] {
+      color: #757575;             // Cancel button
+    }
+  }
+  

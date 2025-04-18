@@ -28,7 +28,7 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe({
         next: () =>{
-          this.toastr.success('Registration successful!', 'Success');
+          this.toastr.success('Login successful!', 'Success');
           this.router.navigate(['post']
           );
         },

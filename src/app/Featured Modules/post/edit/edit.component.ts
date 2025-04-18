@@ -61,7 +61,7 @@ export class EditComponent {
 
     this.postService.update(this.id, this.form.value).subscribe({
       next: (res) => {
-        this.toastr.success('Registration successful!', 'Success');
+        this.toastr.success('Note Upadate successfully!', 'Success');
         this.router.navigate(['post']); // Use navigate() instead of navigateByUrl for better routing
       },
       error: (err) => {

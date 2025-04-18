@@ -14,7 +14,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { PostModule } from './Featured Modules/post/post.module';
 import { NotFoundComponent } from './notfound/notfound.component';
 import { ToastrModule } from 'ngx-toastr';
-import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
