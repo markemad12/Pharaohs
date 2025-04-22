@@ -68,11 +68,14 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('tokenExpiration');
+    
+    // إلغاء timer التلقائي لتسجيل الخروج (إذا كان موجودًا)
     if (this.tokenExpirationTimer) {
       clearTimeout(this.tokenExpirationTimer);
+      this.tokenExpirationTimer = null;
     }
-    this.tokenExpirationTimer = null;
-    this.router.navigate(['/login']);
+    
+    this.router.navigate(['/auth/login']); // إعادة التوجيه إلى اللوجن
   }
 
   getToken(): string | null {

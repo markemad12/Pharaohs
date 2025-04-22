@@ -44,24 +44,32 @@ export class CreateComponent implements OnInit {
       this.markFormControlsAsTouched();
       return;
     }
-
-    // Add authentication check
+  
+    // تأكد من تسجيل الدخول
     if (!this.authService.isLoggedIn()) {
       this.toastr.error('Please login to create notes', 'Authentication Required');
       this.router.navigate(['/login']);
       return;
     }
-
+  
+    // حوّل الـtags من نص إلى مصفوفة
+    const formData = {
+      ...this.form.value,
+      tags: this.form.value.tags
+        .split(',')
+        .map((tag: string) => tag.trim())
+        .filter((tag: string) => tag.length > 0)
+    };
+  
     this.isLoading = true;
-    
-    this.postService.create(this.form.value).subscribe({
+    // أرسل formData بدل this.form.value
+    this.postService.create(formData).subscribe({
       next: (res) => {
         this.toastr.success('Note created successfully!', 'Success');
         this.router.navigate(['/post']);
       },
       error: (err) => {
         console.error('Error creating post:', err);
-        // Handle 403 specifically
         if (err.message.includes('403')) {
           this.toastr.error('Permission denied. Contact administrator.', 'Error');
           this.authService.logout();
@@ -83,4 +91,12 @@ export class CreateComponent implements OnInit {
       control.markAsTouched();
     });
   }
+  getPriorityColor(priority: string): string {
+  switch(priority) {
+    case 'High': return 'red';
+    case 'Medium': return 'orange';
+    case 'Low': return 'green';
+    default: return 'inherit'; // اللون الافتراضي
+  }
+}
 }

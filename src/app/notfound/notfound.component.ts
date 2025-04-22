@@ -19,4 +19,7 @@ export class NotFoundComponent {
   returnHome(): void {
     this.router.navigate(['/post']);
   }
+  returnlogin(): void {
+    this.router.navigate(['/login']);
+  }
 }

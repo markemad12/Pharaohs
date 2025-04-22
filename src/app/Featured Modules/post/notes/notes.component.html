@@ -1,16 +1,19 @@
 <div class="container">
   <h1>Angular 16 CRUD Example - ItSolutionStuff.com</h1>
-  <a href="#" routerLink="create" class="btn btn-success">Create New Post</a>
+  
+  <!-- Always show create button -->
+  <a href="#" routerLink="create" class="btn btn-success mb-4">Create New Post</a>
 
-  <table class="table table-striped">
+  <!-- Show table only when posts exist -->
+  <table *ngIf="posts.length > 0" class="table table-striped">
     <thead>
       <tr>
         <th>ID</th>
         <th>Title</th>
-        <th>Content</th> <!-- تم تغيير من Body إلى Content لتتناسب مع البيانات -->
-        <th>Category</th> <!-- أضيف -->
-        <th>Priority</th> <!-- أضيف -->
-        <th>Tags</th>    <!-- أضيف -->
+        <th>Content</th>
+        <th>Category</th>
+        <th>Priority</th>
+        <th>Tags</th>
         <th width="250px">Action</th>
       </tr>
     </thead>
@@ -18,18 +21,40 @@
       <tr *ngFor="let post of posts">
         <td>{{ post.id }}</td>
         <td>{{ post.title }}</td>
-        <td>{{ post.content }}</td> 
-        <td>{{ post.category }}</td> 
-        <td>{{ post.priority }}</td> 
-        <td>{{ post.tags }}</td>    
+        <td>{{ post.content }}</td>
+        <td>{{ post.category }}</td>
+        <td [ngClass]="{
+          'text-danger': post.priority === 'High',
+          'text-warning': post.priority === 'Medium',
+          'text-success': post.priority === 'Low'
+        }">
+          {{ post.priority }}
+        </td>
+        <td>
+          <span *ngFor="let tag of post.tags" class="badge bg-secondary me-1">{{ tag }}</span>
+        </td>
         <td>
           <a href="#" [routerLink]="['/post/', post.id, 'view']" class="btn btn-info">View</a>
-          <a href="#" [routerLink]="['/post/', post.id, 'edit']" class="btn btn-primary" (click)="updateTask(post)">Edit</a>
-          <button mat-icon-button color="warn" (click)="deletePost(post.id)"  class="btn btn-danger">
-            delete
-          </button>
+          <a href="#" [routerLink]="['/post/', post.id, 'edit']" class="btn btn-primary mx-2">Edit</a>
+          <button class="btn btn-danger" (click)="deletePost(post.id)">Delete</button>
         </td>
       </tr>
     </tbody>
   </table>
-</div>
+
+  <!-- No notes message -->
+  <div *ngIf="posts.length === 0" class="card mt-4 empty-state">
+    <div class="card-body text-center py-5">
+      <div class="empty-state-icon">
+        <i class="bi bi-journal-plus"></i>
+      </div>
+      <h3 class="card-title text-primary mb-3">Welcome to Your Notes! 🎉</h3>
+      <p class="card-text text-muted mb-4">It looks like you haven't created any notes yet.<br>
+        Let's start by creating your first amazing note!</p>
+      <div class="animation-container mb-4">
+        <div class="animation-dot dot-1"></div>
+        <div class="animation-dot dot-2"></div>
+        <div class="animation-dot dot-3"></div>
+      </div>
+    </div>
+  </div>
