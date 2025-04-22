@@ -53,7 +53,17 @@ export class EditComponent {
   }
 
   submit() {
-    this.postService.update(this.id, this.form.value).subscribe({
+    // قم بتحويل الـ tags إلى مصفوفة بشكل صحيح
+    const formData = {
+      ...this.form.value,
+      tags: this.form.value.tags
+        .split(',')
+        .map((tag: string) => tag.trim())
+        .filter((tag: string) => tag.length > 0)
+    };
+  
+    // يجب استخدام formData بدلًا من this.form.value
+    this.postService.update(this.id, formData).subscribe({ // <-- التعديل هنا
       next: () => {
         this.toastr.success('Updated successfully');
         this.router.navigate(['/post']);
@@ -67,5 +77,16 @@ export class EditComponent {
         }
       }
     });
+  }
+  get f() {
+    return this.form.controls;
+  }
+  getPriorityColor(priority: string): string {
+    switch(priority) {
+      case 'High': return 'red';
+      case 'Medium': return 'orange';
+      case 'Low': return 'green';
+      default: return 'inherit'; // اللون الافتراضي
+    }
   }
 }
