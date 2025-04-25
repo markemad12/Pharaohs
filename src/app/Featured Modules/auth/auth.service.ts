@@ -75,7 +75,7 @@ export class AuthService {
       this.tokenExpirationTimer = null;
     }
     
-    this.router.navigate(['/auth/login']); // إعادة التوجيه إلى اللوجن
+    this.router.navigate(['/login']); // إعادة التوجيه إلى اللوجن
   }
 
   getToken(): string | null {
