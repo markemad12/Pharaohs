@@ -11,7 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./notes.component.scss']
 })
 export class NotesComponent implements OnInit {
-  posts: Post[] = [];
+  posts: Post[];
 
   constructor(
     public postService: NotesService,

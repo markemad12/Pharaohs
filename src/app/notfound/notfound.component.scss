@@ -1,0 +1,157 @@
+// not-found.component.scss
+
+// Variables
+$primary: #ff4757;
+$secondary: #2ed573;
+$background: #0a0a2e;
+$glass-bg: rgba(255, 255, 255, 0.05);
+
+// Base styles
+.not-found-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(45deg, #0a0a2e, #1a1a4a);
+  position: relative;
+  overflow: hidden;
+  padding: 2rem;
+  
+  // Glowing particles background
+  &::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: url('data:image/svg+xml,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="1" fill="%23ffffff10"/></svg>');
+    animation: particle-move 20s linear infinite;
+  }
+}
+
+.error-card {
+  position: relative;
+  z-index: 1;
+  background: $glass-bg;
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 4rem 6rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: transform 0.3s;
+  
+  &:hover {
+    transform: rotateY(2deg) rotateX(2deg);
+  }
+
+  h1 {
+    font-size: 12rem;
+    background: linear-gradient(45deg, $primary, $secondary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin: 0;
+    text-shadow: 0 0 30px rgba($primary, 0.3);
+    animation: float 3s ease-in-out infinite;
+  }
+
+  p {
+    color: rgba(white, 0.8);
+    font-size: 1.5rem;
+    max-width: 500px;
+    line-height: 1.6;
+    margin: 2rem 0;
+    text-align: center;
+  }
+}
+
+.button-group {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 3rem;
+  
+  .btn {
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid transparent;
+    cursor: pointer;
+    
+    &-primary {
+      background: $primary;
+      color: white;
+      
+      &::after {
+        content: '→';
+        margin-left: 10px;
+        transition: margin 0.3s ease;
+      }
+      
+      &:hover {
+        background: darken($primary, 10%);
+        transform: translateY(-2px);
+        
+        &::after {
+          margin-left: 15px;
+        }
+      }
+    }
+    
+    &-secondary {
+      background: transparent;
+      color: $secondary;
+      border-color: $secondary;
+      
+      &:hover {
+        background: rgba($secondary, 0.1);
+        box-shadow: 0 0 20px rgba($secondary, 0.2);
+      }
+    }
+  }
+}
+
+// Animations
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes particle-move {
+  from { transform: translate(0); }
+  to { transform: translate(-50%, -50%); }
+}
+
+// Custom cursor
+body {
+  cursor: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="8" fill="%23${secondary}" /></svg>'), auto;
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .error-card {
+    padding: 2rem;
+    width: 90%;
+    
+    h1 {
+      font-size: 8rem;
+    }
+    
+    p {
+      font-size: 1.2rem;
+    }
+  }
+  
+  .button-group {
+    flex-direction: column;
+    
+    .btn {
+      width: 100%;
+    }
+  }
+}

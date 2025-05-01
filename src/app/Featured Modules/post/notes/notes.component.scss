@@ -9,6 +9,21 @@
     margin-bottom: 2rem;
     font-weight: 600;
     text-align: center;
+    transition: color 0.3s ease;
+    text-decoration: none;
+    i {
+      margin-right: 0.5rem;
+      color: #f39c12;
+      transition: transform 0.3s ease;
+    }
+
+    &:hover {
+      color: #f39c12;
+      
+      i {
+        transform: rotate(20deg);
+      }
+    }
   }
 
   .btn-success {
@@ -182,6 +197,7 @@
     border-radius: 15px;
     padding: 5px 10px;
     margin: 2px;
+    color: black;
   }
   .empty-state {
     border: 2px dashed #e9ecef;

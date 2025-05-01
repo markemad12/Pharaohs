@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Post } from '../post';
 import { NotesService } from 'src/app/Featured Modules/post/notes/notes.service';
@@ -22,35 +22,34 @@ export class EditComponent {
     private toastr: ToastrService
   ) { }
 
-  ngOnInit(): void {
-    // Initialize form first
-    this.form = new FormGroup({
-      title: new FormControl('', [Validators.required]),
-      content: new FormControl('', [Validators.required]),
-      category: new FormControl('', [Validators.required]),
-      priority: new FormControl('', [Validators.required]),
-      tags: new FormControl('', [Validators.required])
-    });
+  // edit.component.ts
+ngOnInit(): void {
+  this.form = new FormGroup({
+    title: new FormControl('', [Validators.required]),
+    content: new FormControl('', [Validators.required]),
+    category: new FormControl('', [Validators.required]),
+    priority: new FormControl('', [Validators.required]),
+    tags: new FormControl('', [Validators.required]) // يتوقع قيمة نصية هنا
+  });
 
-    this.id = +this.route.snapshot.params['id'];
-    
-    this.postService.find(this.id).subscribe({
-      next: (data: Post) => {
-        this.post = data;
-        this.form.patchValue({
-          title: this.post.title,
-          content: this.post.content,
-          category: this.post.category,
-          priority: this.post.priority,
-          tags: this.post.tags
-        });
-      },
-      error: (error) => {
-        console.error('Error fetching post:', error);
-        // Handle error (e.g., redirect or show message)
-      }
-    });
-  }
+  this.id = +this.route.snapshot.params['id'];
+  
+  this.postService.find(this.id).subscribe({
+    next: (data: Post) => {
+      this.post = data;
+      this.form.patchValue({
+        title: this.post.title,
+        content: this.post.content,
+        category: this.post.category,
+        priority: this.post.priority,
+        tags: this.post.tags.join(', ') // <-- تحويل المصفوفة إلى سلسلة نصية
+      });
+    },
+    error: (error) => {
+      console.error('Error fetching post:', error);
+    }
+  });
+}
 
   submit() {
     // قم بتحويل الـ tags إلى مصفوفة بشكل صحيح
@@ -80,13 +79,5 @@ export class EditComponent {
   }
   get f() {
     return this.form.controls;
-  }
-  getPriorityColor(priority: string): string {
-    switch(priority) {
-      case 'High': return 'red';
-      case 'Medium': return 'orange';
-      case 'Low': return 'green';
-      default: return 'inherit'; // اللون الافتراضي
-    }
   }
 }

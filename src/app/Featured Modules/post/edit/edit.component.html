@@ -33,10 +33,7 @@
       
       <div class="form-group">
         <label for="priority">Priority:</label>
-        <select formControlName="priority" id="priority" class="form-control"
-                [ngStyle]="{
-                  'color': getPriorityColor(f['priority'].value)
-                }">
+        <select formControlName="priority" id="priority" class="form-control">
           <option value="">Select Priority</option>
           <option value="Low">Low</option>
           <option value="Medium">Medium</option>

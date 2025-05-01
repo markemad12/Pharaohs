@@ -20,7 +20,7 @@ export class ViewComponent implements OnInit, OnDestroy {
   isLoading = true;
   errorMessage = '';
   notFound = false;
-  posts: Post[] = [];
+  posts: Post[] ;
 
   constructor(
     private notesService: NotesService,
@@ -77,18 +77,14 @@ export class ViewComponent implements OnInit, OnDestroy {
         this.notesService.delete(id).subscribe({
           next: () => {
             this.toastr.success('Post deleted successfully!', 'Success');
-            this.posts = this.posts.filter(item => item.id !== id);
-            this.router.navigate(['/post']);  // <-- Move navigation HERE
+            this.router.navigate(['/post']); // Navigate after successful deletion
           },
           error: (err) => {
             this.toastr.error('Failed to delete post', 'Error');
             console.error('Delete error:', err);
-            // Optional: Add error-specific navigation if needed
-            // this.router.navigate(['/error']);
           }
         });
       } else {
-        // Optional: Add canceled dialog feedback
         this.toastr.info('Deletion canceled', 'Info');
       }
     });

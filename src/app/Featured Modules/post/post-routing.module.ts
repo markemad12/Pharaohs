@@ -7,7 +7,7 @@ import { ViewComponent } from './view/view.component';
 
 const routes: Routes = [
   { 
-    path: '',
+    path: '', 
     children: [
       { path: '', component: NotesComponent }, // Default route
       { path: 'create', component: CreateComponent },

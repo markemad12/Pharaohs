@@ -24,16 +24,10 @@ export class RegisterComponent implements OnDestroy {
     this.registerForm = this.fb.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [
-        Validators.required
-      ]],
-      phone: ['', [
-        Validators.required,
-      ]],
-      age: ['', [
-        Validators.required,
-      ]],
-      address: ['', [Validators.required, Validators.minLength(5)]]
+      password: ['', [Validators.required]],
+      phone: ['', [Validators.required]],
+      age: ['', [Validators.required]],
+      address: ['', [Validators.required]]
   });
   }
   get f() {
@@ -57,7 +51,6 @@ export class RegisterComponent implements OnDestroy {
       next: () => {
         this.toastr.success('Registration successful!', 'Success');
         this.router.navigate(['post'], {
-          queryParams: { registered: 'true' }
         });
       },
       error: (error) => {

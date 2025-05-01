@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NotesService } from 'src/app/Featured Modules/post/notes/notes.service';
@@ -10,7 +10,7 @@ import { AuthService } from '../../auth/auth.service';
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss']
 })
-export class CreateComponent implements OnInit {
+export class CreateComponent implements  OnDestroy{
   form!: FormGroup;
   isLoading = false;
 
@@ -91,12 +91,7 @@ export class CreateComponent implements OnInit {
       control.markAsTouched();
     });
   }
-  getPriorityColor(priority: string): string {
-  switch(priority) {
-    case 'High': return 'red';
-    case 'Medium': return 'orange';
-    case 'Low': return 'green';
-    default: return 'inherit'; // اللون الافتراضي
+  ngOnDestroy(): void {
+    
   }
-}
 }

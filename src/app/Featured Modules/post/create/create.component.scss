@@ -155,4 +155,13 @@ $box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
       }
     }
   }
+  select.form-control {
+    option {
+      color: initial; /* اللون الافتراضي للخيارات غير المختارة */
+    }
+  
+    option:checked {
+      color: var(--priority-color); /* اللون للخيار المحدد فقط */
+    }
+  }
 }
